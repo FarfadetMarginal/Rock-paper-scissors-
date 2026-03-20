@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* ── variables ───────────────────────────────────────────── */
+:root {
+  --bg:        #0d0d12;
+  --surface:   #15151e;
+  --border:    #2a2a3a;
+  --accent:    #e8c84a;
+  --accent2:   #4ac8e8;
+  --text:      #f0eee4;
+  --muted:     #7a7a9a;
+}
+
+/* ── reset / base ────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 200px;
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+/* ── layout principal ────────────────────────────────────── */
+.game {
+  position: relative;
+  z-index: 1;
+  width: min(580px, 95vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px #ffffff08,
+    0 0 60px #00000080,
+    inset 0 1px 0 #ffffff0a;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 10%; right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    z-index: 2;
+  }
+}
+
+/* ── titre ───────────────────────────────────────────────── */
+.game > h1 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(0.75rem, 2.5vw, 1rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-shadow: 0 0 20px #e8c84a50;
+  padding: 1.6rem 0 0;
+}
+
+/* ── score ───────────────────────────────────────────────── */
+.score {
+  display: flex;
+  gap: 2.4rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  padding: 0.8rem 0 0;
+  br { display: none; }
+}
+
+/* ── zone d'affichage HERO ───────────────────────────────── */
+.affiche {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  margin-top: 1.2rem;
+  background: #0a0a10;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+
+  /* ligne verticale centrale */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 10%; bottom: 10%; left: 50%;
+    width: 1px;
+    background: var(--border);
+    z-index: 0;
+  }
+
+  /* VS central */
+  &::after {
+    content: 'VS';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.55rem;
+    color: var(--border);
+    background: #0a0a10;
+    padding: 0.4rem 0.3rem;
+    z-index: 1;
+    letter-spacing: 0.1em;
+  }
+
+  p {
+    position: absolute;
+    top: 0.7rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    &:first-child {
+      left: 1rem;
+      color: var(--accent);
+      opacity: 0.7;
+    }
+    &:last-child {
+      right: 1rem;
+      text-align: right;
+      color: var(--accent2);
+      opacity: 0.7;
+    }
+  }
+
+  img {
+    width: 100%;
+    max-width: 220px;
+    height: 220px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    display: block;
+    padding: 2rem 1.4rem 1.4rem;
+    filter: drop-shadow(0 8px 24px #00000099);
+    transition: filter 0.3s, transform 0.3s;
+
+    &:first-of-type {
+      justify-self: end;
+    }
+
+    &:last-of-type {
+      justify-self: start;
+      &:hover { transform: scale(1.05); }
+    }
+
+    &:first-of-type:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+/* ── résultat ────────────────────────────────────────────── */
+.result {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(0.5rem, 1.8vw, 0.65rem);
+  letter-spacing: 0.1em;
+  min-height: 2.4rem;
+  color: var(--accent2);
+  text-shadow: 0 0 14px #4ac8e840;
+  text-align: center;
+  padding: 1rem 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── boutons de choix ────────────────────────────────────── */
+.\\33 b {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0.4rem 1.2rem 0;
+}
+
+.bouton {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background: #0d0d12;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+
+  &::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 120%, var(--accent) 0%, transparent 65%);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  &:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px #00000050, 0 0 0 1px #e8c84a25;
+    &::after { opacity: 0.09; }
+  }
+
+  &:active { transform: scale(0.96); }
+
+  img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    display: block;
+    margin: auto;
+    position: relative;
+    z-index: 1;
+    image-rendering: pixelated;
+    transition: transform 0.15s;
+  }
+
+  &:hover img { transform: scale(1.1); }
+}
+
+/* ── bouton reset ────────────────────────────────────────── */
+.reset {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+  padding: 0.6rem 1.4rem;
+  margin: 0.8rem 0 1.6rem;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+
+  &:hover {
+    color: var(--text);
+    border-color: var(--muted);
+    background: #ffffff05;
+  }
+}
